@@ -1,7 +1,15 @@
 package org.example;
 
 public class Cell {
+
+    private String representation = "   ";
+
     public String getRepresentation(){
-        return "   ";
+        return this.representation;
     }
+
+    public void setRepresentation(String representation){
+        this.representation = representation;
+    }
+
 }
