@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.player.Player;
+
 public class TicTacToe {
 
     private final int size;
@@ -35,34 +37,6 @@ public class TicTacToe {
         }
     }
 
-    public int[] getMoveFromPlayer() {
-
-        int[] coordinates = new int[2];
-
-        int row, col;
-
-        while (true) {
-            try {
-                row = menu.askingRowNumber();
-                col = menu.askingColumnNumber();
-                coordinates[0] = row - 1;
-                coordinates[1] = col - 1;
-
-                if (row < 1 || row > size || col < 1 || col > size) {
-                    System.out.println("Invalid row or column number");
-                } else if (!cells[coordinates[0]][coordinates[1]].getRepresentation().equals("   ")) {
-                    System.out.println("You must select an empty cell");
-                } else {
-                    break;
-                }
-
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter whole numbers between 1 and 3");
-            }
-        }
-        return coordinates;
-    }
-
     public void setOwner(int[] coordinates, Player player) {
         int row = coordinates[0];
         int col = coordinates[1];
@@ -70,34 +44,76 @@ public class TicTacToe {
     }
 
     public boolean checkGameOver(Player currentPlayer) {
-
+        // Check rows, columns, and diagonals for a win
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (cells[i][j].getRepresentation().equals("   ")) {
-                    return false; //if one of the cells is empty, the game is not over yet
-                } else if (cells[i][j].getRepresentation().equals("X") && cells[i - 1][j].getRepresentation().equals("X") && cells[i + 1][j].getRepresentation().equals("X")) {
+                String current = cells[i][j].getRepresentation();
+
+                // Skip empty cells
+                if (current.equals("   ")) {
+                    continue;
+                }
+
+                // Check vertical win
+                if (i >= 1 && i < size - 1 &&
+                        current.equals(cells[i - 1][j].getRepresentation()) &&
+                        current.equals(cells[i + 1][j].getRepresentation())) {
+                    display(); // Show the final board
                     menu.victoryMessage(currentPlayer);
                     return true;
-                } else if (cells[i][j].getRepresentation().equals("X") && cells[i][j - 1].getRepresentation().equals("X") && cells[i][j + 1].getRepresentation().equals("X")) {
+                }
+
+                // Check horizontal win
+                if (j >= 1 && j < size - 1 &&
+                        current.equals(cells[i][j - 1].getRepresentation()) &&
+                        current.equals(cells[i][j + 1].getRepresentation())) {
+                    display(); // Show the final board
                     menu.victoryMessage(currentPlayer);
                     return true;
-                } else if (cells[i][j].getRepresentation().equals("X") && cells[i - 1][j - 1].getRepresentation().equals("X") && cells[i + 1][j + 1].getRepresentation().equals("X")) {
+                }
+
+                // Check main diagonal win
+                if (i >= 1 && i < size - 1 && j >= 1 && j < size - 1 &&
+                        current.equals(cells[i - 1][j - 1].getRepresentation()) &&
+                        current.equals(cells[i + 1][j + 1].getRepresentation())) {
+                    display(); // Show the final board
                     menu.victoryMessage(currentPlayer);
                     return true;
-                } else if (cells[i][j].getRepresentation().equals("O") && cells[i - 1][j].getRepresentation().equals("O") && cells[i + 1][j].getRepresentation().equals("O")) {
-                    menu.victoryMessage(currentPlayer);
-                    return true;
-                } else if (cells[i][j].getRepresentation().equals("O") && cells[i][j - 1].getRepresentation().equals("O") && cells[i][j + 1].getRepresentation().equals("O")) {
-                    menu.victoryMessage(currentPlayer);
-                    return true;
-                } else if (cells[i][j].getRepresentation().equals("O") && cells[i - 1][j - 1].getRepresentation().equals("O") && cells[i + 1][j + 1].getRepresentation().equals("O")) {
+                }
+
+                // Check anti-diagonal win
+                if (i >= 1 && i < size - 1 && j >= 1 && j < size - 1 &&
+                        current.equals(cells[i - 1][j + 1].getRepresentation()) &&
+                        current.equals(cells[i + 1][j - 1].getRepresentation())) {
+                    display(); // Show the final board
                     menu.victoryMessage(currentPlayer);
                     return true;
                 }
             }
         }
-        display(); //show the final table
+
+        // Check if the board is full (no empty cells)
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (cells[i][j].getRepresentation().equals("   ")) {
+                    return false; // if one of the cells is empty, the game is not over yet
+                }
+            }
+        }
+
+        // Game over with no winner
+        display(); // Show the final board
+        menu.drawMessage();
         menu.gameOverMessage();
         return true;
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Cell getCell(int row, int col) {
+        return cells[row][col]; // Return the Cell object at the specified coordinates
+    }
+
 }
