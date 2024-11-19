@@ -1,11 +1,11 @@
 package org.example.player;
 
-import org.example.Menu;
+import org.example.UserInteraction;
 import org.example.TicTacToe;
 
 public class HumanPlayer extends Player {
 
-    Menu menu = new Menu();
+    UserInteraction userInteraction = new UserInteraction();
 
     public HumanPlayer(String representation, String name) {
         super(representation, name);
@@ -13,8 +13,8 @@ public class HumanPlayer extends Player {
 
     @Override
     public int[] provideCoordinates(TicTacToe game) {
-        int row = menu.askingRowNumber() - 1;
-        int col = menu.askingColumnNumber() - 1;
+        int row = userInteraction.askingRowNumber() - 1;
+        int col = userInteraction.askingColumnNumber() - 1;
         return new int[]{row, col};
     }
 }

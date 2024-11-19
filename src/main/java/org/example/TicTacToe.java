@@ -1,16 +1,17 @@
 package org.example;
 
 import org.example.player.Player;
+import org.example.views.View;
 
 public class TicTacToe {
 
     private final int size;
     private final Cell[][] cells;
-    private final Menu menu;
+    View view;
 
     public TicTacToe() {
+        view = new View();
         size = 3;
-        menu = new Menu();
         cells = new Cell[size][size];
     }
 
@@ -22,20 +23,6 @@ public class TicTacToe {
         }
     }
 
-    public void display() {
-
-        System.out.println("   1    2    3"); // Column headers
-        System.out.println("  --------------");
-
-        for (int i = 0; i < cells.length; i++) { // Use a traditional for loop to track row index
-            System.out.print((i + 1) + " |"); // Print row number
-            for (Cell cell : cells[i]) {
-                System.out.print(cell.getRepresentation() + "|"); // Print cell contents
-            }
-            System.out.println(); // Move to the next line
-            System.out.println("  --------------"); // Row separator
-        }
-    }
 
     public void setOwner(int[] coordinates, Player player) {
         int row = coordinates[0];
@@ -58,8 +45,8 @@ public class TicTacToe {
                 if (i >= 1 && i < size - 1 &&
                         current.equals(cells[i - 1][j].getRepresentation()) &&
                         current.equals(cells[i + 1][j].getRepresentation())) {
-                    display(); // Show the final board
-                    menu.victoryMessage(currentPlayer);
+                    view.displayBoard(cells); // Show the final board
+                    view.victoryMessage(currentPlayer);
                     return true;
                 }
 
@@ -67,8 +54,8 @@ public class TicTacToe {
                 if (j >= 1 && j < size - 1 &&
                         current.equals(cells[i][j - 1].getRepresentation()) &&
                         current.equals(cells[i][j + 1].getRepresentation())) {
-                    display(); // Show the final board
-                    menu.victoryMessage(currentPlayer);
+                    view.displayBoard(cells); // Show the final board
+                    view.victoryMessage(currentPlayer);
                     return true;
                 }
 
@@ -76,8 +63,8 @@ public class TicTacToe {
                 if (i >= 1 && i < size - 1 && j >= 1 && j < size - 1 &&
                         current.equals(cells[i - 1][j - 1].getRepresentation()) &&
                         current.equals(cells[i + 1][j + 1].getRepresentation())) {
-                    display(); // Show the final board
-                    menu.victoryMessage(currentPlayer);
+                    view.displayBoard(cells); // Show the final board
+                    view.victoryMessage(currentPlayer);
                     return true;
                 }
 
@@ -85,8 +72,8 @@ public class TicTacToe {
                 if (i >= 1 && i < size - 1 && j >= 1 && j < size - 1 &&
                         current.equals(cells[i - 1][j + 1].getRepresentation()) &&
                         current.equals(cells[i + 1][j - 1].getRepresentation())) {
-                    display(); // Show the final board
-                    menu.victoryMessage(currentPlayer);
+                    view.displayBoard(cells); // Show the final board
+                    view.victoryMessage(currentPlayer);
                     return true;
                 }
             }
@@ -102,9 +89,9 @@ public class TicTacToe {
         }
 
         // Game over with no winner
-        display(); // Show the final board
-        menu.drawMessage();
-        menu.gameOverMessage();
+        view.displayBoard(cells); // Show the final board
+        view.drawMessage();
+        view.gameOverMessage();
         return true;
     }
 
@@ -112,8 +99,25 @@ public class TicTacToe {
         return size;
     }
 
+    /**
+     * Retrieves the specific Cell object located at the given row and column indices.
+     *
+     * @param row the row index of the desired cell (0-based).
+     * @param col the column index of the desired cell (0-based).
+     * @return the Cell object at the specified row and column.
+     * @throws ArrayIndexOutOfBoundsException if the row or column indices are out of bounds.
+     */
     public Cell getCell(int row, int col) {
-        return cells[row][col]; // Return the Cell object at the specified coordinates
+        return cells[row][col];
+    }
+
+    /**
+     * Returns the entire 2D array of Cell objects representing the game board.
+     *
+     * @return a 2D array of Cell objects representing the current state of the board.
+     */
+    public Cell[][] getCells() {
+        return cells;
     }
 
 }

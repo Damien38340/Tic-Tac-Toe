@@ -4,7 +4,7 @@ import org.example.TicTacToe;
 
 public abstract class Player {
     private final String representation;
-    private String name;
+    private final String name;
 
     public Player(String representation, String name) {
         this.representation = representation;
@@ -16,7 +16,7 @@ public abstract class Player {
     }
 
     public String getName() {
-        return this.name = name;
+        return name;
     }
 
     protected abstract int[] provideCoordinates(TicTacToe game);
@@ -49,7 +49,6 @@ public abstract class Player {
                 System.out.println("An unexpected error occurred: " + e.getMessage());
             }
         }
-
         return coordinates;
     }
 }

@@ -3,14 +3,15 @@ package org.example;
 import org.example.player.ArtificialPlayer;
 import org.example.player.HumanPlayer;
 import org.example.player.Player;
+import org.example.views.View;
 
 public class Game {
     Player currentPlayer;
     Player firstPlayer;
     Player secondPlayer;
     TicTacToe ticTacToe;
-    AsciiArt asciiArt;
-    Menu menu;
+    UserInteraction userInteraction;
+    View view;
 
     public Game() {
         // Initialize players
@@ -18,13 +19,13 @@ public class Game {
         secondPlayer = new HumanPlayer(" O ", "Player 2");
 
         // Initialize game components
+        view = new View();
         ticTacToe = new TicTacToe();
-        asciiArt = new AsciiArt();
-        menu = new Menu();
+        userInteraction = new UserInteraction();
     }
 
     public void mainMenu() {
-        String gameMode = menu.mainMenu(); // Ask the user to select a game mode
+        String gameMode = userInteraction.mainMenu(); // Ask the user to select a game mode
         switch (gameMode) {
             case "1":
                 break;
@@ -39,14 +40,14 @@ public class Game {
                 break;
 
             default:
-                menu.defaultMessage();
+                view.defaultMessage();
                 mainMenu();
                 break;
         }
     }
 
     public void startGame() {
-        asciiArt.homePage(); // Display the homepage
+        view.displayHomePage();
         ticTacToe.populateTable(); // Prepare the board
         mainMenu();
         // Configure players based on game mode
@@ -55,8 +56,8 @@ public class Game {
 
         while (true) {
             try {
-                ticTacToe.display(); // Show the board
-                menu.playerMessage(currentPlayer); // Display current player's turn
+                view.displayBoard(ticTacToe.getCells()); // Display the board updated after each turn
+                view.playerMessage(currentPlayer); // Display current player's turn
 
                 int[] coordinates = currentPlayer.getCoordinates(ticTacToe);
                 ticTacToe.setOwner(coordinates, currentPlayer);
