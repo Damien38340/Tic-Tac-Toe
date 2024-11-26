@@ -1,7 +1,7 @@
 package org.example.views;
 
-import org.example.Cell;
-import org.example.player.Player;
+import org.example.model.cell.Cell;
+import org.example.model.player.Player;
 
 public class View {
 
@@ -10,6 +10,24 @@ public class View {
     public void displayHomePage() {
         asciiArt.homePage(); // Display the homepage
     }
+
+    public void displayGameModeMenu() {
+
+        System.out.println("1. Player 1 VS Player 2");
+        System.out.println("2. Player 1 VS CPU");
+        System.out.println("3. CPU VS CPU");
+    }
+
+    public void displayRowQuestion() {
+        System.out.println("Enter row number (1, 2 or 3): ");
+
+    }
+
+    public void displayColQuestion() {
+        System.out.println("Enter column number (1, 2 or 3): ");
+
+    }
+
 
     public void displayBoard(Cell[][] cells) {
 
@@ -45,6 +63,20 @@ public class View {
 
     public void defaultMessage() {
         System.out.println("\n Invalid choice, please select a valid option.");
+    }
+
+    public void invalidRowOrColumnMessage() {
+        System.out.println("Invalid row or column number. Please try again.");
+    }
+
+    public void cellAlreadyOccupiedMessage() {
+        System.out.println("Cell is already occupied. Please choose an empty cell.");
+
+    }
+
+    public void numberFormatExceptionMessage() {
+        System.out.println("Invalid input. Please enter valid numbers.");
+
     }
 
 }

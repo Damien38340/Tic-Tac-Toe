@@ -1,6 +1,7 @@
-package org.example.player;
+package org.example.model.player;
 
-import org.example.TicTacToe;
+import org.example.model.TicTacToe;
+import org.example.model.cell.State;
 
 import java.util.Random;
 
@@ -8,8 +9,8 @@ public class ArtificialPlayer extends Player {
 
     private static final Random random = new Random();
 
-    public ArtificialPlayer(String representation, String name) {
-        super(representation, name);
+    public ArtificialPlayer(State state, String name) {
+        super(state, name);
     }
 
     public int randomRow() {
@@ -25,11 +26,8 @@ public class ArtificialPlayer extends Player {
 
         int row, col;
 
-        do {
             row = randomRow();
             col = randomCol();
-
-        } while (!game.getCell(row, col).getRepresentation().equals("   ")); // Ensure AI picks an empty cell
 
         return new int[]{row, col};
     }

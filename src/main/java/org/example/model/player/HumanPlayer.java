@@ -1,14 +1,15 @@
-package org.example.player;
+package org.example.model.player;
 
-import org.example.UserInteraction;
-import org.example.TicTacToe;
+import org.example.model.TicTacToe;
+import org.example.model.cell.State;
+import org.example.router.UserInteraction;
 
 public class HumanPlayer extends Player {
 
     UserInteraction userInteraction = new UserInteraction();
 
-    public HumanPlayer(String representation, String name) {
-        super(representation, name);
+    public HumanPlayer(State state, String name) {
+        super(state, name);
     }
 
     @Override
