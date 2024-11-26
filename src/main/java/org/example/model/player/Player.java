@@ -1,7 +1,6 @@
 package org.example.model.player;
 
 import org.example.model.cell.State;
-import org.example.model.TicTacToe;
 
 public abstract class Player {
     State state;
@@ -20,12 +19,11 @@ public abstract class Player {
         return name;
     }
 
-    public abstract int[] provideCoordinates(TicTacToe game);
-
-
     public State getState() {
         return state;
     }
+
+//    public abstract int[] provideCoordinates();
 
     @Override
     public String toString() {

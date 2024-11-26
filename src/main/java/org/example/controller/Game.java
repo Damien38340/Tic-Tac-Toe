@@ -63,7 +63,11 @@ public class Game {
                 int[] coordinates;
 
                 do {
-                    coordinates = currentPlayer.provideCoordinates(ticTacToe); // Get player input
+                    if (currentPlayer instanceof ArtificialPlayer ap) {
+                        coordinates = ap.provideCoordinatesFromComputer(); // Get computer input
+                    } else {
+                        coordinates = userInteraction.provideCoordinates(); // Get player input
+                    }
 
                 } while (!isValidInput(coordinates)); // if the input is not valid, ask the user again to type
 

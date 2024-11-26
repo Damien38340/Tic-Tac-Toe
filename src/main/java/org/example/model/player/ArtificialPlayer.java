@@ -21,8 +21,7 @@ public class ArtificialPlayer extends Player {
         return random.nextInt(3);
     }
 
-    @Override
-    public int[] provideCoordinates(TicTacToe game) {
+    public int[] provideCoordinatesFromComputer() {
 
         int row, col;
 
